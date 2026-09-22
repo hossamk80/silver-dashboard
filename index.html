@@ -17,7 +17,7 @@ button.active,button:hover{background:#d9e0eb;color:#101522}.page{display:none}.
 .up{color:var(--up)}.down{color:var(--down)}.neutral{color:var(--warn)}input{width:100%;padding:11px 12px;border-radius:10px;border:1px solid #3a4b70;background:#0c1428;color:#fff;font-size:16px}
 label{display:block;color:#aeb9d4;font-size:13px;margin-bottom:7px}.actions{display:flex;gap:9px;flex-wrap:wrap;margin-top:12px}.buy{background:#143c2d;border-color:#27885e}.sell{background:#4a2025;border-color:#a84652}
 table{width:100%;border-collapse:collapse;font-size:13px}th,td{padding:10px 8px;border-bottom:1px solid #273652;text-align:right;vertical-align:top}th{color:#b9c6df;background:#121a2f}.tablewrap{overflow:auto;max-height:500px}
-canvas{width:100%;height:340px;background:#0b1325;border-radius:12px}.rec{border-right:4px solid #7287b4}.src{font-size:12px;color:#95a5c6}.status{font-weight:700}.good{color:var(--up)}.bad{color:var(--down)}
+canvas{width:100%;height:340px;background:#0b1325;border-radius:12px}.rec{border-right:4px solid #7287b4}.src{font-size:12px;color:#95a5c6}.status{font-weight:700}.good{color:var(--up)}.bad{color:var(--down)}#chart svg{display:block;width:100%;height:340px}
 @media(max-width:1050px){.grid5,.grid4,.grid3{grid-template-columns:repeat(2,1fr)}}@media(max-width:650px){.grid5,.grid4,.grid3{grid-template-columns:1fr}.wrap{padding:14px}}
 </style>
 </head>
@@ -193,48 +193,6 @@ $('clear').onclick=()=>{if(confirm('مسح سجل العمليات؟')){trades=[
 function renderLedger(){const s=avgCostState(),bid=Number($('bid').value||liveSpot),val=s.qty*bid,un=(bid-s.avg)*s.qty,total=s.real+un;$('sumBuy').textContent=fmt(s.sumB)+' SAR';$('sumSell').textContent=fmt(s.sumS)+' SAR';$('qty').textContent=fmt(s.qty,2)+' g';$('avgCost').textContent=fmt(s.avg,3)+' SAR/g';$('currentValue').textContent=fmt(val)+' SAR';$('realPL').textContent=fmt(s.real)+' SAR';$('unrealPL').textContent=fmt(un)+' SAR';$('totalPL').textContent=fmt(total)+' SAR';
  let q=0,avg=0;$('rows').innerHTML=trades.map(t=>{let pl='—';if(t.type==='buy'){let nq=q+t.g;avg=nq?((q*avg)+(t.g*t.p))/nq:0;q=nq}else{pl=fmt((t.p-avg)*t.g)+' SAR';q-=t.g;if(q<1e-9){q=0;avg=0}}return '<tr><td>'+t.ts+'</td><td>'+(t.type==='buy'?'شراء':'بيع')+'</td><td>'+fmt(t.g,2)+'</td><td>'+fmt(t.p,3)+'</td><td>'+fmt(t.g*t.p)+'</td><td>'+pl+'</td></tr>'}).reverse().join('')}
 let currentPeriod='monthly';
-function periodSeries(key){
- if(key==='daily') return DATA.slice(-2);
- if(key==='weekly') return DATA.slice(-7);
- if(key==='monthly') return DATA.slice();
- if(key==='quarterly') return MONTHLY.slice(-3);
- if(key==='halfyear') return MONTHLY.slice(-6);
- if(key==='annual') return MONTHLY.slice(-12);
- if(key==='multi') return ANNUAL.slice();
- return DATA.slice();
-}
-function periodTitle(key){
- return {daily:'يومي',weekly:'أسبوعي',monthly:'شهري',quarterly:'ربع سنوي',halfyear:'نصف سنوي',annual:'سنوي',multi:'عدة سنوات'}[key]||key;
-}
-function updatePeriodSummary(series,key){
- if(!series.length)return;
- const first=series[0],last=series[series.length-1],vals=series.map(x=>x.v),hi=Math.max(...vals),lo=Math.min(...vals);
- const diff=last.v-first.v,pct=first.v?diff/first.v*100:0;
- $('periodStart').textContent=fmt(first.v,3)+' SAR/g';$('periodStartLabel').textContent=first.d;
- $('periodEnd').textContent=fmt(last.v,3)+' SAR/g';$('periodEndLabel').textContent=last.d;
- $('periodChange').textContent=(pct>=0?'▲ ':'▼ ')+fmt(Math.abs(pct),2)+'%';
- $('periodChange').className='v '+(pct>=0?'up':'down');
- $('periodChangeAbs').textContent=(diff>=0?'+':'')+fmt(diff,3)+' SAR/g';
- $('periodHigh').textContent=fmt(hi,3)+' SAR/g';$('periodLow').textContent='الأدنى '+fmt(lo,3)+' SAR/g';
- $('chartTitle').textContent='اتجاه سعر الجرام — '+periodTitle(key);
-}
-function draw(series=periodSeries(currentPeriod)){
- const c=$('chart'),x=c.getContext('2d'),W=c.width,H=c.height,p=45,vs=series.map(a=>a.v),mi=Math.min(...vs),ma=Math.max(...vs),sp=ma-mi||1;
- mi-=sp*.08;ma+=sp*.08;x.clearRect(0,0,W,H);x.fillStyle='#0b1325';x.fillRect(0,0,W,H);x.strokeStyle='#293955';x.fillStyle='#93a2c2';x.font='11px Tahoma';
- for(let i=0;i<5;i++){let y=p+(H-2*p)*i/4;x.beginPath();x.moveTo(p,y);x.lineTo(W-p,y);x.stroke();x.fillText(fmt(ma-(ma-mi)*i/4,2),5,y+3)}
- const pts=series.map((a,i)=>({x:p+(W-2*p)*(series.length===1?0.5:i/(series.length-1)),y:p+(H-2*p)*(ma-a.v)/(ma-mi)}));
- x.strokeStyle='#d9e0eb';x.lineWidth=3;x.beginPath();pts.forEach((q,i)=>i?x.lineTo(q.x,q.y):x.moveTo(q.x,q.y));x.stroke();
- pts.forEach((q,i)=>{if(!i)return;x.fillStyle=series[i].v>=series[i-1].v?'#39d98a':'#ff7373';x.beginPath();x.arc(q.x,q.y,3.5,0,Math.PI*2);x.fill()});
- x.fillStyle='#93a2c2';x.font='11px Tahoma';
- const marks=[0,Math.floor((series.length-1)/2),series.length-1].filter((v,i,a)=>a.indexOf(v)===i);
- marks.forEach(i=>x.fillText(series[i].d,Math.max(5,Math.min(W-95,pts[i].x-25)),H-13));
- updatePeriodSummary(series,currentPeriod);
-}
-document.querySelectorAll('[data-period]').forEach(b=>b.onclick=()=>{
- document.querySelectorAll('[data-period]').forEach(x=>x.classList.remove('active'));
- b.classList.add('active');currentPeriod=b.dataset.period;draw(periodSeries(currentPeriod));
-});
-draw();updateMarket();calc();renderLedger();fetchLive();setInterval(fetchLive,60000);
 function renderPeriodSafe(key){
   const names={daily:'يومي',weekly:'أسبوعي',monthly:'شهري',quarterly:'ربع سنوي',halfyear:'نصف سنوي',annual:'سنوي',multi:'عدة سنوات'};
   let series;
@@ -297,6 +255,11 @@ document.querySelectorAll('[data-period]').forEach(b=>{
   };
 });
 renderPeriodSafe(currentPeriod);
+updateMarket();
+calc();
+renderLedger();
+fetchLive();
+setInterval(fetchLive,60000);
 
 </script>
 </body></html>
