@@ -61,14 +61,14 @@ canvas{width:100%;height:340px;background:#0b1325;border-radius:12px}.rec{border
         <button data-period="multi">عدة سنوات</button>
       </div>
       <div class="grid4">
-        <div class="card"><div class="k">بداية الفترة</div><div class="v" id="periodStart">—</div><div class="hint" id="periodStartLabel">—</div></div>
-        <div class="card"><div class="k">نهاية الفترة</div><div class="v" id="periodEnd">—</div><div class="hint" id="periodEndLabel">—</div></div>
-        <div class="card"><div class="k">التغير خلال الفترة</div><div class="v" id="periodChange">—</div><div class="hint" id="periodChangeAbs">—</div></div>
-        <div class="card"><div class="k">أعلى / أدنى الفترة</div><div class="v" id="periodHigh">—</div><div class="hint" id="periodLow">—</div></div>
+        <div class="card"><div class="k">بداية الفترة</div><div class="v" id="periodStart">8.314 SAR/g</div><div class="hint" id="periodStartLabel">2026-08-24</div></div>
+        <div class="card"><div class="k">نهاية الفترة</div><div class="v" id="periodEnd">7.952 SAR/g</div><div class="hint" id="periodEndLabel">2026-09-22</div></div>
+        <div class="card"><div class="k">التغير خلال الفترة</div><div class="v down" id="periodChange">▼ 4.36%</div><div class="hint" id="periodChangeAbs">-0.362 SAR/g</div></div>
+        <div class="card"><div class="k">أعلى / أدنى الفترة</div><div class="v" id="periodHigh">8.352 SAR/g</div><div class="hint" id="periodLow">الأدنى 7.592 SAR/g</div></div>
       </div>
     </div>
 
-    <div class="panel" style="margin-top:14px"><h2 id="chartTitle">اتجاه سعر الجرام — شهري</h2><canvas id="chart" width="1100" height="340"></canvas><div class="src">مرجع الاتجاه التاريخي: XAG/USD وبيانات تاريخية للفضة بالريال السعودي. السعر اللحظي: Gold API، ثم التحويل إلى SAR على أساس 3.75 SAR/USD.</div></div>
+    <div class="panel" style="margin-top:14px"><h2 id="chartTitle">اتجاه سعر الجرام — شهري</h2><div id="chart" style="width:100%;min-height:340px;background:#0b1325;border-radius:12px;overflow:hidden"></div><div class="src">مرجع الاتجاه التاريخي: XAG/USD وبيانات تاريخية للفضة بالريال السعودي. السعر اللحظي: Gold API، ثم التحويل إلى SAR على أساس 3.75 SAR/USD.</div></div>
   </section>
 
   <section id="trade" class="page">
@@ -235,5 +235,68 @@ document.querySelectorAll('[data-period]').forEach(b=>b.onclick=()=>{
  b.classList.add('active');currentPeriod=b.dataset.period;draw(periodSeries(currentPeriod));
 });
 draw();updateMarket();calc();renderLedger();fetchLive();setInterval(fetchLive,60000);
+function renderPeriodSafe(key){
+  const names={daily:'يومي',weekly:'أسبوعي',monthly:'شهري',quarterly:'ربع سنوي',halfyear:'نصف سنوي',annual:'سنوي',multi:'عدة سنوات'};
+  let series;
+  if(key==='daily') series=DATA.slice(-2);
+  else if(key==='weekly') series=DATA.slice(-7);
+  else if(key==='monthly') series=DATA.slice();
+  else if(key==='quarterly') series=MONTHLY.slice(-3);
+  else if(key==='halfyear') series=MONTHLY.slice(-6);
+  else if(key==='annual') series=MONTHLY.slice(-12);
+  else series=ANNUAL.slice();
+
+  if(!series || series.length<1) return;
+  const vals=series.map(x=>Number(x.v)).filter(Number.isFinite);
+  const first=series[0], last=series[series.length-1];
+  const hi=Math.max(...vals), lo=Math.min(...vals), diff=last.v-first.v, pct=first.v?diff/first.v*100:0;
+
+  if($('periodStart')) $('periodStart').textContent=fmt(first.v,3)+' SAR/g';
+  if($('periodStartLabel')) $('periodStartLabel').textContent=first.d;
+  if($('periodEnd')) $('periodEnd').textContent=fmt(last.v,3)+' SAR/g';
+  if($('periodEndLabel')) $('periodEndLabel').textContent=last.d;
+  if($('periodChange')){
+    $('periodChange').textContent=(pct>=0?'▲ ':'▼ ')+fmt(Math.abs(pct),2)+'%';
+    $('periodChange').className='v '+(pct>=0?'up':'down');
+  }
+  if($('periodChangeAbs')) $('periodChangeAbs').textContent=(diff>=0?'+':'')+fmt(diff,3)+' SAR/g';
+  if($('periodHigh')) $('periodHigh').textContent=fmt(hi,3)+' SAR/g';
+  if($('periodLow')) $('periodLow').textContent='الأدنى '+fmt(lo,3)+' SAR/g';
+  if($('chartTitle')) $('chartTitle').textContent='اتجاه سعر الجرام — '+(names[key]||key);
+
+  const W=1100,H=340,padL=65,padR=25,padT=25,padB=45;
+  let min=lo,max=hi,span=max-min||1;min-=span*.10;max+=span*.10;
+  const xAt=i=>padL+(W-padL-padR)*(series.length===1?0.5:i/(series.length-1));
+  const yAt=v=>padT+(H-padT-padB)*(max-v)/(max-min);
+  let grid='', labels='';
+  for(let i=0;i<5;i++){
+    const y=padT+(H-padT-padB)*i/4;
+    const val=max-(max-min)*i/4;
+    grid+='<line x1="'+padL+'" y1="'+y+'" x2="'+(W-padR)+'" y2="'+y+'" stroke="#293955" stroke-width="1"/>';
+    labels+='<text x="8" y="'+(y+4)+'" fill="#93a2c2" font-size="12">'+Number(val).toFixed(2)+'</text>';
+  }
+  const pts=series.map((a,i)=>xAt(i)+','+yAt(a.v)).join(' ');
+  let dots='';
+  series.forEach((a,i)=>{
+    const col=i===0?'#d9e0eb':(a.v>=series[i-1].v?'#39d98a':'#ff7373');
+    dots+='<circle cx="'+xAt(i)+'" cy="'+yAt(a.v)+'" r="4" fill="'+col+'"/>';
+  });
+  const idxs=[0,Math.floor((series.length-1)/2),series.length-1].filter((v,i,a)=>a.indexOf(v)===i);
+  idxs.forEach(i=>{labels+='<text x="'+Math.max(8,Math.min(W-120,xAt(i)-35))+'" y="'+(H-12)+'" fill="#93a2c2" font-size="12">'+series[i].d+'</text>';});
+  const svg='<svg viewBox="0 0 '+W+' '+H+'" width="100%" height="340" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">'+
+    '<rect width="'+W+'" height="'+H+'" fill="#0b1325"/>'+grid+labels+
+    '<polyline points="'+pts+'" fill="none" stroke="#d9e0eb" stroke-width="3"/>'+dots+'</svg>';
+  if($('chart')) $('chart').innerHTML=svg;
+}
+document.querySelectorAll('[data-period]').forEach(b=>{
+  b.onclick=()=>{
+    document.querySelectorAll('[data-period]').forEach(x=>x.classList.remove('active'));
+    b.classList.add('active');
+    currentPeriod=b.dataset.period;
+    renderPeriodSafe(currentPeriod);
+  };
+});
+renderPeriodSafe(currentPeriod);
+
 </script>
 </body></html>
