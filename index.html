@@ -18,13 +18,13 @@ button.active,button:hover{background:#d9e0eb;color:#101522}.page{display:none}.
 label{display:block;color:#aeb9d4;font-size:13px;margin-bottom:7px}.actions{display:flex;gap:9px;flex-wrap:wrap;margin-top:12px}.buy{background:#143c2d;border-color:#27885e}.sell{background:#4a2025;border-color:#a84652}
 table{width:100%;border-collapse:collapse;font-size:13px}th,td{padding:10px 8px;border-bottom:1px solid #273652;text-align:right;vertical-align:top}th{color:#b9c6df;background:#121a2f}.tablewrap{overflow:auto;max-height:500px}
 canvas{width:100%;height:340px;background:#0b1325;border-radius:12px}.rec{border-right:4px solid #7287b4}.src{font-size:12px;color:#95a5c6}.status{font-weight:700}.good{color:var(--up)}.bad{color:var(--down)}#chart svg{display:block;width:100%;height:380px}.chart-wrap{position:relative}.chart-tip{position:absolute;display:none;pointer-events:none;z-index:5;min-width:190px;background:#07101f;border:1px solid #52698f;border-radius:10px;padding:10px 12px;color:#fff;font-size:12px;line-height:1.7;box-shadow:0 8px 24px rgba(0,0,0,.35)}.chart-tip b{font-size:14px}.period-insight{margin-top:12px;padding:14px;border:1px solid #2d4165;border-radius:12px;background:#0d172a;line-height:1.8}.detail-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:8px;margin-top:12px}.detail-item{padding:10px;border:1px solid #273958;border-radius:10px;background:#0c1528}.detail-item .d{font-size:12px;color:#9eacc8}.detail-item .p{font-weight:800;font-size:16px;margin-top:4px}.detail-item .c{font-size:12px;margin-top:4px}.chart-help{margin-top:7px;color:#8fa0c0;font-size:12px}.chart-controls{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin:10px 0 4px}.chart-controls label{display:flex;align-items:center;gap:6px;margin:0;padding:7px 10px;border:1px solid #2c3e60;border-radius:9px;background:#0d172a;color:#dbe6f8;font-size:12px}.chart-controls input{width:auto}.legend-dot{width:20px;height:3px;border-radius:3px;display:inline-block}.trend-strip{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:12px}.trend-box{padding:12px;border:1px solid #2d4165;border-radius:12px;background:#0d172a}.trend-box .tv{font-size:19px;font-weight:800;margin-top:5px}.sr-strip{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:12px}.sr-box{padding:12px;border:1px solid #2d4165;border-radius:12px;background:#0d172a}.sr-box .sv{font-size:18px;font-weight:800;margin-top:5px}.zone-chip{display:inline-block;padding:3px 8px;border-radius:999px;font-size:11px;margin-top:6px}.support-chip{background:rgba(57,217,138,.12);color:#7ff0b4;border:1px solid rgba(57,217,138,.35)}.resist-chip{background:rgba(255,115,115,.12);color:#ff9b9b;border:1px solid rgba(255,115,115,.35)}@media(max-width:1000px){.sr-strip{grid-template-columns:repeat(2,1fr)}}@media(max-width:800px){.trend-strip,.sr-strip{grid-template-columns:1fr}}
-@media(max-width:1050px){.grid5,.grid4,.grid3{grid-template-columns:repeat(2,1fr)}}@media(max-width:650px){.grid5,.grid4,.grid3{grid-template-columns:1fr}.wrap{padding:14px}}
+.asset-switch{display:flex;gap:8px;flex-wrap:wrap;margin:12px 0 4px}.asset-switch button[disabled]{opacity:.45;cursor:not-allowed}.selectlike,select{width:100%;padding:11px 12px;border-radius:10px;border:1px solid #3a4b70;background:#0c1428;color:#fff;font-size:16px}.engine{display:grid;grid-template-columns:1.1fr 1fr;gap:12px}.engine-score{font-size:42px;font-weight:900}.engine-factors{display:grid;grid-template-columns:repeat(2,1fr);gap:8px}.factor{padding:10px;border:1px solid #2d4165;border-radius:10px;background:#0c1528}.alert-list{display:grid;gap:8px}.alert-item{padding:11px 12px;border:1px solid #2d4165;border-radius:10px;background:#0c1528;display:flex;justify-content:space-between;gap:12px;align-items:center}.alert-hit{border-color:#ffd166;background:rgba(255,209,102,.08)}.alert-ok{border-color:#2d4165}.small-input{max-width:170px}@media(max-width:900px){.engine{grid-template-columns:1fr}.engine-factors{grid-template-columns:1fr}}@media(max-width:1050px){.grid5,.grid4,.grid3{grid-template-columns:repeat(2,1fr)}}@media(max-width:650px){.grid5,.grid4,.grid3{grid-template-columns:1fr}.wrap{padding:14px}}
 </style>
 </head>
 <body>
 <div class="wrap">
   <div class="top">
-    <div><h1>داشبورد الفضة — السعودية</h1><div class="muted">سعر Spot لحظي + أسعار تنفيذ الراجحي + سجل العمليات + توصيات منفصلة للسوق والبنك</div></div>
+    <div><h1>داشبورد المعادن والأصول — السعودية</h1><div class="muted">الفضة الآن • مع بنية جاهزة لإضافة الذهب والعملات الرقمية لاحقًا خطوة بخطوة</div><div class="asset-switch"><button class="active" type="button">الفضة</button><button type="button" disabled title="سيتم إضافتها في المرحلة القادمة">الذهب — قريبًا</button><button type="button" disabled title="سيتم إضافتها لاحقًا">العملات الرقمية — قريبًا</button></div></div>
     <div>
       <div class="badge" id="liveStatus">جارٍ تحديث Spot...</div>
       <div class="hint" id="lastLiveUpdate">—</div>
@@ -33,10 +33,10 @@ canvas{width:100%;height:340px;background:#0b1325;border-radius:12px}.rec{border
 
   <div class="tabs">
     <button class="tab active" data-p="market">تحليل السوق</button>
-    <button class="tab" data-p="trade">الراجحي: شراء / بيع</button>
+    <button class="tab" data-p="trade">منصة الشراء / البيع</button>
     <button class="tab" data-p="ledger">السجل والربح/الخسارة</button>
     <button class="tab" data-p="platforms">مقارنة المنصات</button>
-    <button class="tab" data-p="recs">التوصيات</button>
+    <button class="tab" data-p="recs">التوصيات</button><button class="tab" data-p="alerts">التنبيهات</button>
   </div>
 
   <section id="market" class="page active">
@@ -73,13 +73,14 @@ canvas{width:100%;height:340px;background:#0b1325;border-radius:12px}.rec{border
 
   <section id="trade" class="page">
     <div class="panel">
-      <h2>أسعار التنفيذ — محفظة الفضة في الراجحي</h2>
-      <div class="muted">أدخل السعرين الظاهرين في تطبيق الراجحي. Spot للمقارنة فقط؛ الربح والخسارة الفعلية تعتمد على سعر البنك.</div>
+      <h2>أسعار التنفيذ — المنصة التي تستخدمها</h2>
+      <div class="muted">يمكنك استخدام المنصة أو أي منصة أخرى. أدخل سعر الشراء الفعلي الذي تدفعه وسعر البيع الفعلي الذي تستلمه؛ Spot للمقارنة فقط.</div>
+      <div class="grid3" style="margin-top:14px"><div><label>المنصة</label><select id="platformSelect"><option value="Al Rajhi">مصرف المنصة</option><option value="anb eTrader">anb eTrader</option><option value="BullionVault">BullionVault</option><option value="Kinesis">Kinesis</option><option value="custom">منصة أخرى</option></select></div><div><label>اسم المنصة المخصصة</label><input id="customPlatform" type="text" placeholder="مثال: اسم المنصة" disabled></div><div class="card"><div class="k">المنصة الحالية</div><div class="v" id="currentPlatform">مصرف المنصة</div><div class="hint">يتم حفظ الاختيار على هذا المتصفح.</div></div></div>
       <div class="grid4" style="margin-top:14px">
         <div class="card"><div class="k">Spot لحظي مرجعي</div><div class="v" id="tradeSpot">7.953</div><div class="hint">SAR/g</div></div>
         <div><label>الكمية بالجرام</label><input id="grams" type="number" min="0" step="0.01" value="50"><div class="hint">مثال: 50 جرام</div></div>
-        <div><label>سعر بيع الراجحي لك — أنت تشتري SAR/g</label><input id="ask" type="number" min="0" step="0.001" value="7.953"><div class="hint">السعر الذي تدفعه عند الشراء.</div></div>
-        <div><label>سعر شراء الراجحي منك — أنت تبيع SAR/g</label><input id="bid" type="number" min="0" step="0.001" value="7.953"><div class="hint">السعر الذي تحصل عليه عند البيع.</div></div>
+        <div><label>سعر بيع المنصة لك — أنت تشتري SAR/g</label><input id="ask" type="number" min="0" step="0.001" value="7.953"><div class="hint">السعر الذي تدفعه عند الشراء.</div></div>
+        <div><label>سعر شراء المنصة منك — أنت تبيع SAR/g</label><input id="bid" type="number" min="0" step="0.001" value="7.953"><div class="hint">السعر الذي تحصل عليه عند البيع.</div></div>
       </div>
       <div class="grid4" style="margin-top:14px">
         <div class="card"><div class="k">قيمة الشراء</div><div class="v" id="buyTotal">—</div></div>
@@ -88,8 +89,8 @@ canvas{width:100%;height:340px;background:#0b1325;border-radius:12px}.rec{border
         <div class="card"><div class="k">تكلفة الـSpread لهذه الكمية</div><div class="v" id="spreadCost">—</div></div>
       </div>
       <div class="grid3" style="margin-top:12px">
-        <div class="card"><div class="k">فرق سعر شراء الراجحي عن Spot</div><div class="v" id="askVsSpot">—</div></div>
-        <div class="card"><div class="k">فرق سعر بيعك للراجحي عن Spot</div><div class="v" id="bidVsSpot">—</div></div>
+        <div class="card"><div class="k">فرق سعر شراء المنصة عن Spot</div><div class="v" id="askVsSpot">—</div></div>
+        <div class="card"><div class="k">فرق سعر بيعك للمنصة عن Spot</div><div class="v" id="bidVsSpot">—</div></div>
         <div class="card"><div class="k">نقطة التعادل للمخزون الحالي</div><div class="v" id="breakEven">—</div><div class="hint">تقريبًا حسب متوسط التكلفة الحالي</div></div>
       </div>
       <div class="actions"><button class="buy" id="recordBuy">تسجيل شراء</button><button class="sell" id="recordSell">تسجيل بيع</button><button id="resetSpot">استخدام Spot كمرجع</button></div>
@@ -121,26 +122,41 @@ canvas{width:100%;height:340px;background:#0b1325;border-radius:12px}.rec{border
       <table>
         <thead><tr><th>الخيار</th><th>نوع الاستخدام</th><th>ما يجب مقارنته</th><th>ملاحظة</th></tr></thead>
         <tbody>
-          <tr><td><b>مصرف الراجحي — محفظة الفضة</b></td><td>محفظة رقمية محلية بالريال</td><td>Spread الفعلي وسعر شراء البنك منك</td><td>شراء وبيع وتخزين رقمي مع تحديثات أسعار فورية حسب صفحة المنتج الرسمية.</td></tr>
+          <tr><td><b>مصرف المنصة — محفظة الفضة</b></td><td>محفظة رقمية محلية بالريال</td><td>Spread الفعلي وسعر شراء البنك منك</td><td>شراء وبيع وتخزين رقمي مع تحديثات أسعار فورية حسب صفحة المنتج الرسمية.</td></tr>
           <tr><td><b>anb eTrader</b></td><td>تداول Spot أكثر تقدمًا</td><td>الأهلية، نوع الحساب، التنفيذ، وأي شروط مرتبطة بالهامش</td><td>أقرب لمنصة تداول متقدمة من محفظة ادخار بسيطة.</td></tr>
           <tr><td><b>BullionVault</b></td><td>تخزين دولي وحيازة مخصصة</td><td>العمولة، التخزين، التحويلات الدولية، العملة</td><td>ليست منصة سعودية محلية.</td></tr>
           <tr><td><b>Kinesis</b></td><td>فضة رقمية مخصصة 1:1</td><td>الرسوم، الاسترداد، التحويل، الأهلية</td><td>بنية دولية مختلفة عن البنك السعودي.</td></tr>
         </tbody>
       </table>
     </div>
-    <div class="panel" style="margin-top:14px"><div class="muted"><b>للاستخدام المحلي البسيط:</b> الراجحي أوضح خيار Retail سعودي تم التحقق منه. <b>للتداول المتقدم:</b> قارن anb eTrader إذا كنت مؤهلًا للخدمة. <b>للتخزين الدولي:</b> الخيارات الدولية تحتاج مقارنة رسوم وتحويل وتنظيم بشكل منفصل.</div></div>
+    <div class="panel" style="margin-top:14px"><div class="muted"><b>للاستخدام المحلي البسيط:</b> المنصة أوضح خيار Retail سعودي تم التحقق منه. <b>للتداول المتقدم:</b> قارن anb eTrader إذا كنت مؤهلًا للخدمة. <b>للتخزين الدولي:</b> الخيارات الدولية تحتاج مقارنة رسوم وتحويل وتنظيم بشكل منفصل.</div></div>
   </section>
 
-  <section id="recs" class="page">
-    <div class="grid3">
-      <div class="panel rec"><h3>توصية الراجحي</h3><div class="muted" id="rajhiRec">أدخل سعري الراجحي أولًا.</div></div>
+  <section id="recs" class="page"><div class="panel"><h2>محرك القراءة المركبة</h2><div class="muted">يجمع قرب السعر من الدعم/المقاومة، MA7 وMA30، اتجاه الفترة، Spread المنصة، ومتوسط تكلفة محفظتك. النتيجة قراءة مساعدة وليست أمر شراء أو بيع.</div><div class="engine" style="margin-top:14px"><div class="card"><div class="k">القراءة الحالية</div><div class="engine-score neutral" id="engineLabel">—</div><div class="hint" id="engineWhy">—</div></div><div class="engine-factors" id="engineFactors"></div></div></div>
+    <div class="grid3" style="margin-top:12px">
+      <div class="panel rec"><h3>قراءة المنصة الحالية</h3><div class="muted" id="rajhiRec">أدخل سعري المنصة أولًا.</div></div>
       <div class="panel rec"><h3>توصية السوق العامة</h3><div class="muted" id="generalRec">—</div></div>
-      <div class="panel rec"><h3>توصية المنصة</h3><div class="muted">إذا كان هدفك شراء وبيع فضة رقميًا داخل السعودية وبالريال وبطريقة بسيطة، فمحفظة الراجحي هي الخيار المحلي الأوضح الذي تم التحقق منه. المقارنة العملية يجب أن تتم على Spread وسعر البيع الفعلي لك، لا على Spot وحده.</div></div>
+      <div class="panel rec"><h3>توصية المنصة</h3><div class="muted">اختيار المنصة يعتمد على التنفيذ الفعلي: Spread، الرسوم، وسهولة الإيداع والسحب والتخزين. الموقع يقارن سعر المنصة الذي تدخله مع Spot ومحفظتك بدل افتراض أن منصة واحدة مناسبة دائمًا.</div></div>
+    </div>
+  </section>
+
+  <section id="alerts" class="page">
+    <div class="panel">
+      <h2>تنبيهات داخل الداشبورد</h2>
+      <div class="muted">هذه التنبيهات تعمل أثناء فتح الموقع. لا ترسل إشعارات للهاتف في الخلفية حاليًا.</div>
+      <div class="grid4" style="margin-top:14px">
+        <div><label>تنبيه عند سعر أقل من أو يساوي SAR/g</label><input id="alertBelow" type="number" step="0.001" placeholder="مثال 7.70"></div>
+        <div><label>تنبيه عند سعر أعلى من أو يساوي SAR/g</label><input id="alertAbove" type="number" step="0.001" placeholder="مثال 8.20"></div>
+        <div><label>هدف ربح للمحفظة %</label><input id="alertProfit" type="number" step="0.1" placeholder="مثال 5"></div>
+        <div><label>حد Spread المنصة %</label><input id="alertSpread" type="number" step="0.1" value="3"></div>
+      </div>
+      <div class="actions"><button id="saveAlerts" type="button">حفظ إعدادات التنبيه</button></div>
+      <div class="alert-list" id="alertList" style="margin-top:14px"></div>
     </div>
   </section>
 
   <div class="panel" style="margin-top:16px">
-    <div class="muted"><b>مهم:</b> المؤشرات هنا تحليلية وتعليمية وليست ضمانًا للربح. Spot مرجع سوق، بينما تنفيذ الراجحي يعتمد على الأسعار التي تظهر داخل التطبيق. تحقّق من السعر قبل أي قرار.</div>
+    <div class="muted"><b>مهم:</b> المؤشرات هنا تحليلية وتعليمية وليست ضمانًا للربح. Spot مرجع سوق، بينما تنفيذ المنصة يعتمد على الأسعار التي تظهر داخل التطبيق. تحقّق من السعر قبل أي قرار.</div>
   </div>
 </div>
 
@@ -156,6 +172,10 @@ const ANNUAL=[
 ];
 let trades=[];try{trades=JSON.parse(localStorage.getItem('silverLedgerV8')||localStorage.getItem('silverLedgerV7')||'[]')}catch(e){trades=[]}
 const $=id=>document.getElementById(id);
+let platformState={name:'مصرف المنصة',key:'Al Rajhi'};
+try{const p=JSON.parse(localStorage.getItem('silverPlatformV1')||'null');if(p)platformState=p}catch(e){}
+let alertCfg={below:null,above:null,profit:null,spread:3};
+try{const a=JSON.parse(localStorage.getItem('silverAlertsV1')||'null');if(a)alertCfg={...alertCfg,...a}}catch(e){}
 function fmt(n,d=2){return Number(n||0).toLocaleString('ar-SA',{minimumFractionDigits:d,maximumFractionDigits:d})}
 document.querySelectorAll('.tab').forEach(b=>b.onclick=()=>{document.querySelectorAll('.tab').forEach(x=>x.classList.remove('active'));document.querySelectorAll('.page').forEach(x=>x.classList.remove('active'));b.classList.add('active');$(b.dataset.p).classList.add('active')});
 function mean(a){return a.reduce((s,v)=>s+v,0)/a.length}
@@ -163,7 +183,7 @@ function marketStats(){const a=DATA.map(x=>x.v),a7=a.slice(-7),a30=a.slice(-Math
 function updateMarket(){const s=marketStats();$('avg7').textContent=fmt(s.a7,3);$('avg30').textContent=fmt(s.a30,3);$('hiLow').textContent=fmt(s.hi,3);$('lowText').textContent='الأدنى '+fmt(s.lo,3);
  let label='انتظار / مراقبة',reason='السعر قريب من متوسطاته ولا توجد إشارة قوية.';
  if(liveSpot<s.a7*0.985&&liveSpot<s.a30*0.98){label='منطقة شراء محتملة';reason='السعر أقل بوضوح من المتوسطات القصيرة؛ الشراء التدريجي يقلل أثر توقيت الدخول.'}
- else if(liveSpot>s.a7*1.02&&liveSpot>s.a30*1.035){label='منطقة بيع / جني ربح محتملة';reason='السعر أعلى من المتوسطات بفارق واضح؛ قيّم البيع الجزئي إذا كان سعر تنفيذ الراجحي يحقق ربحًا.'}
+ else if(liveSpot>s.a7*1.02&&liveSpot>s.a30*1.035){label='منطقة بيع / جني ربح محتملة';reason='السعر أعلى من المتوسطات بفارق واضح؛ قيّم البيع الجزئي إذا كان سعر تنفيذ المنصة يحقق ربحًا.'}
  $('marketSignal').textContent=label;$('marketReason').textContent=reason;$('generalRec').innerHTML='<b>'+label+'</b><br>'+reason+'<br>Spot الحالي: <b>'+fmt(liveSpot,3)+' SAR/g</b>.';
 }
 async function fetchLive(){
@@ -174,8 +194,8 @@ async function fetchLive(){
   liveSpot=(usdOz*SAR_PER_USD)/OZ_G;
   $('spotGram').textContent=fmt(liveSpot,3)+' SAR/g';$('spotOz').textContent=fmt(usdOz*SAR_PER_USD,2)+' SAR/oz';$('tradeSpot').textContent=fmt(liveSpot,3);
   $('liveStatus').textContent='Spot لحظي متصل';$('liveStatus').className='badge good';$('lastLiveUpdate').textContent='آخر تحديث: '+new Date().toLocaleString('ar-SA');
-  updateMarket();calc();return true;
- }catch(e){$('liveStatus').textContent='تعذر التحديث — آخر سعر محفوظ';$('liveStatus').className='badge bad';$('lastLiveUpdate').textContent='يمكن استخدام السعر اليدوي في الحاسبة.';updateMarket();calc();return false}
+  updateMarket();calc();updateCompositeEngine();updateAlerts();return true;
+ }catch(e){$('liveStatus').textContent='تعذر التحديث — آخر سعر محفوظ';$('liveStatus').className='badge bad';$('lastLiveUpdate').textContent='يمكن استخدام السعر اليدوي في الحاسبة.';updateMarket();calc();updateCompositeEngine();updateAlerts();return false}
 }
 function avgCostState(){let q=0,avg=0,real=0,sumB=0,sumS=0;for(const t of trades){if(t.type==='buy'){let nq=q+t.g;avg=nq?((q*avg)+(t.g*t.p))/nq:0;q=nq;sumB+=t.g*t.p}else{real+=(t.p-avg)*t.g;q-=t.g;if(q<1e-9){q=0;avg=0}sumS+=t.g*t.p}}return{qty:q,avg,real,sumB,sumS}}
 function calc(){const g=Number($('grams').value||0),ask=Number($('ask').value||0),bid=Number($('bid').value||0),s=ask-bid,p=ask>0?s/ask*100:0;
@@ -183,7 +203,7 @@ function calc(){const g=Number($('grams').value||0),ask=Number($('ask').value||0
  const askDiff=liveSpot?((ask/liveSpot)-1)*100:0,bidDiff=liveSpot?((bid/liveSpot)-1)*100:0;$('askVsSpot').textContent=(askDiff>=0?'+':'')+fmt(askDiff,2)+'%';$('bidVsSpot').textContent=(bidDiff>=0?'+':'')+fmt(bidDiff,2)+'%';
  const st=avgCostState();$('breakEven').textContent=st.qty>0?fmt(st.avg,3)+' SAR/g':'—';
  let msg='Spread الحالي '+fmt(p,2)+'%. ';if(st.qty>0){const pl=(bid-st.avg)*st.qty;msg+='لو بعت كامل الكمية الحالية بسعر '+fmt(bid,3)+' SAR/g، الربح/الخسارة غير المحققة تقارب '+fmt(pl)+' SAR. '}
- msg+=p<=1?'الـSpread منخفض نسبيًا.':p<=3?'الـSpread متوسط؛ قارن السعر قبل التنفيذ.':'الـSpread مرتفع نسبيًا؛ يحتاج تحرك أكبر في السعر للوصول للتعادل.';$('rajhiRec').textContent=msg;renderLedger();
+ msg+=p<=1?'الـSpread منخفض نسبيًا.':p<=3?'الـSpread متوسط؛ قارن السعر قبل التنفيذ.':'الـSpread مرتفع نسبيًا؛ يحتاج تحرك أكبر في السعر للوصول للتعادل.';$('rajhiRec').textContent=msg;renderLedger();updateCompositeEngine();updateAlerts();
 }
 ['grams','ask','bid'].forEach(id=>$(id).oninput=calc);$('refreshLive').onclick=fetchLive;$('useLiveTrade').onclick=()=>{$('ask').value=liveSpot.toFixed(3);$('bid').value=liveSpot.toFixed(3);document.querySelector('[data-p="trade"]').click();calc()};$('resetSpot').onclick=()=>{$('ask').value=liveSpot.toFixed(3);$('bid').value=liveSpot.toFixed(3);calc()};
 function add(type){const g=Number($('grams').value||0),p=Number($(type==='buy'?'ask':'bid').value||0);if(!(g>0&&p>0))return alert('أدخل كمية وسعر صحيحين.');const s=avgCostState();if(type==='sell'&&g>s.qty+1e-9)return alert('الكمية المتاحة للبيع '+fmt(s.qty,2)+' جرام.');trades.push({type,g,p,ts:new Date().toLocaleString('ar-SA')});save();renderLedger()}
@@ -191,6 +211,89 @@ $('recordBuy').onclick=()=>add('buy');$('recordSell').onclick=()=>add('sell');fu
 $('clear').onclick=()=>{if(confirm('مسح سجل العمليات؟')){trades=[];save();renderLedger()}};
 function renderLedger(){const s=avgCostState(),bid=Number($('bid').value||liveSpot),val=s.qty*bid,un=(bid-s.avg)*s.qty,total=s.real+un;$('sumBuy').textContent=fmt(s.sumB)+' SAR';$('sumSell').textContent=fmt(s.sumS)+' SAR';$('qty').textContent=fmt(s.qty,2)+' g';$('avgCost').textContent=fmt(s.avg,3)+' SAR/g';$('currentValue').textContent=fmt(val)+' SAR';$('realPL').textContent=fmt(s.real)+' SAR';$('unrealPL').textContent=fmt(un)+' SAR';$('totalPL').textContent=fmt(total)+' SAR';
  let q=0,avg=0;$('rows').innerHTML=trades.map(t=>{let pl='—';if(t.type==='buy'){let nq=q+t.g;avg=nq?((q*avg)+(t.g*t.p))/nq:0;q=nq}else{pl=fmt((t.p-avg)*t.g)+' SAR';q-=t.g;if(q<1e-9){q=0;avg=0}}return '<tr><td>'+t.ts+'</td><td>'+(t.type==='buy'?'شراء':'بيع')+'</td><td>'+fmt(t.g,2)+'</td><td>'+fmt(t.p,3)+'</td><td>'+fmt(t.g*t.p)+'</td><td>'+pl+'</td></tr>'}).reverse().join('')}
+function initPlatform(){
+  const sel=$('platformSelect'),custom=$('customPlatform');
+  if(!sel)return;
+  const option=[...sel.options].find(o=>o.value===platformState.key);
+  sel.value=option?platformState.key:'custom';
+  if(sel.value==='custom'){custom.disabled=false;custom.value=platformState.name||''}else{custom.disabled=true}
+  $('currentPlatform').textContent=platformState.name||sel.options[sel.selectedIndex].text;
+  sel.addEventListener('change',()=>{
+    custom.disabled=sel.value!=='custom';
+    if(sel.value==='custom'){
+      platformState={key:'custom',name:custom.value.trim()||'منصة أخرى'};
+    }else{
+      platformState={key:sel.value,name:sel.options[sel.selectedIndex].text};
+    }
+    localStorage.setItem('silverPlatformV1',JSON.stringify(platformState));
+    $('currentPlatform').textContent=platformState.name;calc();updateCompositeEngine();updateAlerts();
+  });
+  custom.addEventListener('input',()=>{
+    if(sel.value!=='custom')return;
+    platformState={key:'custom',name:custom.value.trim()||'منصة أخرى'};
+    localStorage.setItem('silverPlatformV1',JSON.stringify(platformState));
+    $('currentPlatform').textContent=platformState.name;calc();updateCompositeEngine();updateAlerts();
+  });
+}
+function loadAlertInputs(){
+  if(!$('alertBelow'))return;
+  $('alertBelow').value=alertCfg.below??'';
+  $('alertAbove').value=alertCfg.above??'';
+  $('alertProfit').value=alertCfg.profit??'';
+  $('alertSpread').value=alertCfg.spread??3;
+}
+function saveAlertSettings(){
+  const num=id=>{const v=Number($(id).value);return $(id).value===''?null:(Number.isFinite(v)?v:null)};
+  alertCfg={below:num('alertBelow'),above:num('alertAbove'),profit:num('alertProfit'),spread:num('alertSpread')};
+  localStorage.setItem('silverAlertsV1',JSON.stringify(alertCfg));updateAlerts();
+}
+function updateAlerts(){
+  if(!$('alertList'))return;
+  const st=avgCostState(),bid=Number($('bid')?.value||liveSpot),ask=Number($('ask')?.value||liveSpot);
+  const spreadPct=ask>0?((ask-bid)/ask)*100:0;
+  const profitPct=st.qty>0&&st.avg>0?((bid/st.avg)-1)*100:null;
+  const series=periodSeries(currentPeriod),sr=supportResistance(series);
+  const items=[];
+  if(sr){
+    const nearSupport=Math.abs(liveSpot-sr.support.mid)/sr.support.mid*100<=1.0;
+    const nearResistance=Math.abs(liveSpot-sr.resistance.mid)/sr.resistance.mid*100<=1.0;
+    items.push({hit:nearSupport,text:'السعر قريب من منطقة الدعم ('+fmt(sr.support.mid,3)+' SAR/g)'});
+    items.push({hit:nearResistance,text:'السعر قريب من منطقة المقاومة ('+fmt(sr.resistance.mid,3)+' SAR/g)'});
+  }
+  if(alertCfg.below!=null)items.push({hit:liveSpot<=alertCfg.below,text:'السعر وصل/نزل عن '+fmt(alertCfg.below,3)+' SAR/g'});
+  if(alertCfg.above!=null)items.push({hit:liveSpot>=alertCfg.above,text:'السعر وصل/تجاوز '+fmt(alertCfg.above,3)+' SAR/g'});
+  if(st.qty>0)items.push({hit:bid>=st.avg,text:'سعر بيع المنصة وصل نقطة التعادل '+fmt(st.avg,3)+' SAR/g'});
+  if(alertCfg.profit!=null&&profitPct!=null)items.push({hit:profitPct>=alertCfg.profit,text:'ربح المحفظة وصل '+fmt(alertCfg.profit,1)+'% أو أكثر'});
+  if(alertCfg.spread!=null)items.push({hit:spreadPct>=alertCfg.spread,text:'Spread المنصة وصل '+fmt(alertCfg.spread,1)+'% أو أكثر'});
+  $('alertList').innerHTML=items.map(x=>'<div class="alert-item '+(x.hit?'alert-hit':'alert-ok')+'"><span>'+x.text+'</span><b class="'+(x.hit?'neutral':'muted')+'">'+(x.hit?'تنبيه':'غير متحقق')+'</b></div>').join('')||'<div class="muted">لم يتم إعداد أي تنبيهات بعد.</div>';
+}
+function updateCompositeEngine(){
+  if(!$('engineLabel'))return;
+  const series=periodSeries(currentPeriod),sr=supportResistance(series),overlay=dailyOverlayForSeries(series,currentPeriod);
+  const st=avgCostState(),ask=Number($('ask')?.value||liveSpot),bid=Number($('bid')?.value||liveSpot);
+  const spread=ask>0?((ask-bid)/ask)*100:0;
+  let score=0,f=[];
+  if(sr){
+    const pos=(liveSpot-sr.support.mid)/(sr.resistance.mid-sr.support.mid||1);
+    if(pos<=.25){score+=2;f.push(['قرب الدعم','إيجابي للرصد'])}
+    else if(pos>=.75){score-=2;f.push(['قرب المقاومة','حذر'])}
+    else f.push(['موضع النطاق','منتصف النطاق']);
+  }
+  const ma7=[...overlay.ma7].reverse().find(v=>v!=null);
+  if(ma7!=null){if(liveSpot>=ma7){score+=1;f.push(['مقابل MA7','فوق المتوسط'])}else{score-=1;f.push(['مقابل MA7','تحت المتوسط'])}}
+  if(overlay.ma30Value!=null){if(liveSpot>=overlay.ma30Value){score+=1;f.push(['مقابل MA30','فوق المتوسط'])}else{score-=1;f.push(['مقابل MA30','تحت المتوسط'])}}
+  const first=Number(series[0].v),last=Number(series[series.length-1].v),chg=first?((last/first)-1)*100:0;
+  if(chg>1){score+=1;f.push(['اتجاه الفترة','صاعد'])}else if(chg<-1){score-=1;f.push(['اتجاه الفترة','هابط'])}else f.push(['اتجاه الفترة','جانبي']);
+  if(spread<=1){score+=1;f.push(['Spread '+platformState.name,'منخفض نسبيًا'])}else if(spread>3){score-=2;f.push(['Spread '+platformState.name,'مرتفع'])}else f.push(['Spread '+platformState.name,'متوسط']);
+  if(st.qty>0){const pp=(bid/st.avg-1)*100;if(pp>=0){score+=1;f.push(['المحفظة','فوق التعادل'])}else f.push(['المحفظة','تحت التعادل '+fmt(pp,1)+'%'])}
+  let label='انتظار / مراقبة',cls='neutral',why='العوامل متوازنة ولا توجد قراءة قوية.';
+  if(score>=4){label='مراقبة قوية';cls='up';why='عدة عوامل فنية وتنفيذية متوافقة، لكن القرار النهائي يعتمد على السعر الفعلي للمنصة والمخاطر.'}
+  else if(score<=-3){label='حذر / انتظار';cls='down';why='توجد عدة عوامل غير مريحة مثل قرب المقاومة أو اتجاه ضعيف أو Spread مرتفع.'}
+  else if(score>=2){label='مراقبة إيجابية';cls='up';why='بعض العوامل تميل للإيجابية لكن الإشارة ليست مكتملة.'}
+  else if(score<=-1){label='مراقبة بحذر';cls='neutral';why='بعض العوامل تحتاج تحسنًا قبل اعتبار الوضع أقوى.'}
+  $('engineLabel').textContent=label;$('engineLabel').className='engine-score '+cls;$('engineWhy').textContent=why+' | الدرجة التحليلية: '+score;
+  $('engineFactors').innerHTML=f.map(x=>'<div class="factor"><div class="k">'+x[0]+'</div><b>'+x[1]+'</b></div>').join('');
+}
 let currentPeriod='monthly';
 function arDay(dateStr){
   const d=new Date(dateStr+'T00:00:00Z');
@@ -465,11 +568,12 @@ function renderPeriodSafe(key){
 document.querySelectorAll('[data-period]').forEach(b=>{
   b.onclick=()=>{
     document.querySelectorAll('[data-period]').forEach(x=>x.classList.remove('active'));
-    b.classList.add('active');currentPeriod=b.dataset.period;hideTip();renderPeriodSafe(currentPeriod);
+    b.classList.add('active');currentPeriod=b.dataset.period;hideTip();renderPeriodSafe(currentPeriod);updateCompositeEngine();updateAlerts();
   };
 });
 ['showPrice','showMA7','showMA30','showSR'].forEach(id=>{if($(id))$(id).addEventListener('change',()=>renderPeriodSafe(currentPeriod));});
-renderPeriodSafe(currentPeriod);
-updateMarket();calc();renderLedger();fetchLive();setInterval(fetchLive,60000);
+if($('saveAlerts'))$('saveAlerts').addEventListener('click',saveAlertSettings);
+initPlatform();loadAlertInputs();renderPeriodSafe(currentPeriod);
+updateMarket();calc();renderLedger();updateCompositeEngine();updateAlerts();fetchLive();setInterval(fetchLive,60000);
 </script>
 </body></html>
