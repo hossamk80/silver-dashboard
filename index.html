@@ -17,7 +17,7 @@ button.active,button:hover{background:#d9e0eb;color:#101522}.page{display:none}.
 .up{color:var(--up)}.down{color:var(--down)}.neutral{color:var(--warn)}input{width:100%;padding:11px 12px;border-radius:10px;border:1px solid #3a4b70;background:#0c1428;color:#fff;font-size:16px}
 label{display:block;color:#aeb9d4;font-size:13px;margin-bottom:7px}.actions{display:flex;gap:9px;flex-wrap:wrap;margin-top:12px}.buy{background:#143c2d;border-color:#27885e}.sell{background:#4a2025;border-color:#a84652}
 table{width:100%;border-collapse:collapse;font-size:13px}th,td{padding:10px 8px;border-bottom:1px solid #273652;text-align:right;vertical-align:top}th{color:#b9c6df;background:#121a2f}.tablewrap{overflow:auto;max-height:500px}
-canvas{width:100%;height:340px;background:#0b1325;border-radius:12px}.rec{border-right:4px solid #7287b4}.src{font-size:12px;color:#95a5c6}.status{font-weight:700}.good{color:var(--up)}.bad{color:var(--down)}#chart svg{display:block;width:100%;height:380px}.chart-wrap{position:relative}.chart-tip{position:absolute;display:none;pointer-events:none;z-index:5;min-width:190px;background:#07101f;border:1px solid #52698f;border-radius:10px;padding:10px 12px;color:#fff;font-size:12px;line-height:1.7;box-shadow:0 8px 24px rgba(0,0,0,.35)}.chart-tip b{font-size:14px}.period-insight{margin-top:12px;padding:14px;border:1px solid #2d4165;border-radius:12px;background:#0d172a;line-height:1.8}.detail-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:8px;margin-top:12px}.detail-item{padding:10px;border:1px solid #273958;border-radius:10px;background:#0c1528}.detail-item .d{font-size:12px;color:#9eacc8}.detail-item .p{font-weight:800;font-size:16px;margin-top:4px}.detail-item .c{font-size:12px;margin-top:4px}.chart-help{margin-top:7px;color:#8fa0c0;font-size:12px}
+canvas{width:100%;height:340px;background:#0b1325;border-radius:12px}.rec{border-right:4px solid #7287b4}.src{font-size:12px;color:#95a5c6}.status{font-weight:700}.good{color:var(--up)}.bad{color:var(--down)}#chart svg{display:block;width:100%;height:380px}.chart-wrap{position:relative}.chart-tip{position:absolute;display:none;pointer-events:none;z-index:5;min-width:190px;background:#07101f;border:1px solid #52698f;border-radius:10px;padding:10px 12px;color:#fff;font-size:12px;line-height:1.7;box-shadow:0 8px 24px rgba(0,0,0,.35)}.chart-tip b{font-size:14px}.period-insight{margin-top:12px;padding:14px;border:1px solid #2d4165;border-radius:12px;background:#0d172a;line-height:1.8}.detail-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:8px;margin-top:12px}.detail-item{padding:10px;border:1px solid #273958;border-radius:10px;background:#0c1528}.detail-item .d{font-size:12px;color:#9eacc8}.detail-item .p{font-weight:800;font-size:16px;margin-top:4px}.detail-item .c{font-size:12px;margin-top:4px}.chart-help{margin-top:7px;color:#8fa0c0;font-size:12px}.chart-controls{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin:10px 0 4px}.chart-controls label{display:flex;align-items:center;gap:6px;margin:0;padding:7px 10px;border:1px solid #2c3e60;border-radius:9px;background:#0d172a;color:#dbe6f8;font-size:12px}.chart-controls input{width:auto}.legend-dot{width:20px;height:3px;border-radius:3px;display:inline-block}.trend-strip{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:12px}.trend-box{padding:12px;border:1px solid #2d4165;border-radius:12px;background:#0d172a}.trend-box .tv{font-size:19px;font-weight:800;margin-top:5px}@media(max-width:800px){.trend-strip{grid-template-columns:1fr}}
 @media(max-width:1050px){.grid5,.grid4,.grid3{grid-template-columns:repeat(2,1fr)}}@media(max-width:650px){.grid5,.grid4,.grid3{grid-template-columns:1fr}.wrap{padding:14px}}
 </style>
 </head>
@@ -68,7 +68,7 @@ canvas{width:100%;height:340px;background:#0b1325;border-radius:12px}.rec{border
       </div>
     </div>
 
-    <div class="panel" style="margin-top:14px"><h2 id="chartTitle">اتجاه سعر الجرام — شهري</h2><div class="chart-wrap"><div id="chart" style="width:100%;min-height:380px;background:#0b1325;border-radius:12px;overflow:hidden"></div><div id="chartTip" class="chart-tip"></div></div><div class="chart-help">حرّك مؤشر الماوس فوق أي نقطة لعرض التاريخ، السعر، والتغير عن النقطة السابقة. على الجوال اضغط على النقطة.</div><div id="periodNarrative" class="period-insight"></div><div id="periodDetail" class="detail-grid"></div><div class="src" style="margin-top:12px">مرجع الاتجاه التاريخي: XAG/USD وبيانات تاريخية للفضة بالريال السعودي. السعر اللحظي: Gold API، ثم التحويل إلى SAR على أساس 3.75 SAR/USD.</div></div>
+    <div class="panel" style="margin-top:14px"><h2 id="chartTitle">اتجاه سعر الجرام — شهري</h2><div class="chart-controls"><label><input type="checkbox" id="showPrice" checked><span class="legend-dot" style="background:#d9e0eb"></span>السعر</label><label><input type="checkbox" id="showMA7" checked><span class="legend-dot" style="background:#39d98a"></span>MA7</label><label><input type="checkbox" id="showMA30" checked><span class="legend-dot" style="background:#ffd166"></span>MA30*</label><span class="hint" id="maNote">* متوسط 30 جلسة حسب البيانات المتاحة.</span></div><div class="chart-wrap"><div id="chart" style="width:100%;min-height:380px;background:#0b1325;border-radius:12px;overflow:hidden"></div><div id="chartTip" class="chart-tip"></div></div><div class="chart-help">حرّك مؤشر الماوس فوق أي نقطة لعرض التاريخ، السعر، والتغير عن النقطة السابقة. على الجوال اضغط على النقطة.</div><div class="trend-strip"><div class="trend-box"><div class="k">الاتجاه قصير الأجل</div><div class="tv" id="shortTrend">—</div><div class="hint" id="shortTrendNote">—</div></div><div class="trend-box"><div class="k">السعر مقابل MA7</div><div class="tv" id="vsMA7">—</div><div class="hint" id="vsMA7Note">—</div></div><div class="trend-box"><div class="k">السعر مقابل MA30</div><div class="tv" id="vsMA30">—</div><div class="hint" id="vsMA30Note">—</div></div></div><div id="periodNarrative" class="period-insight"></div><div id="periodDetail" class="detail-grid"></div><div class="src" style="margin-top:12px">مرجع الاتجاه التاريخي: XAG/USD وبيانات تاريخية للفضة بالريال السعودي. السعر اللحظي: Gold API، ثم التحويل إلى SAR على أساس 3.75 SAR/USD.</div></div>
   </section>
 
   <section id="trade" class="page">
@@ -280,12 +280,74 @@ function showTip(ev,series,i){
   tip.style.left=left+'px';tip.style.top=top+'px';
 }
 function hideTip(){ if($('chartTip')) $('chartTip').style.display='none'; }
+function rollingAverage(values,windowSize){
+  return values.map((_,i)=>{
+    if(i+1<windowSize) return null;
+    const a=values.slice(i-windowSize+1,i+1);
+    return a.reduce((x,y)=>x+y,0)/a.length;
+  });
+}
+function dailyOverlayForSeries(series,key){
+  if(!['daily','weekly','monthly'].includes(key)) return {ma7:[],ma30:[],ma30Value:null,note:'المتوسطات المتحركة اليومية تظهر في يومي / أسبوعي / شهري فقط.'};
+  const full=DATA.map(x=>Number(x.v));
+  const ma7Full=rollingAverage(full,7);
+  const available=Math.min(30,full.length);
+  const ma30Value=full.slice(-available).reduce((a,b)=>a+b,0)/available;
+  const startIndex=DATA.length-series.length;
+  return {
+    ma7:series.map((_,i)=>ma7Full[startIndex+i]),
+    ma30:series.map(()=>ma30Value),
+    ma30Value,
+    note:'MA30 مبني على آخر '+available+' جلسة متاحة من أصل 30.'
+  };
+}
+function polylineFromValues(values,xAt,yAt){
+  const segs=[];let cur=[];
+  values.forEach((v,i)=>{
+    if(v==null||!Number.isFinite(v)){if(cur.length){segs.push(cur);cur=[]}return;}
+    cur.push(xAt(i)+','+yAt(v));
+  });
+  if(cur.length)segs.push(cur);
+  return segs.map(a=>a.join(' '));
+}
+function updateTrendBoxes(series,key,overlay){
+  if(!['daily','weekly','monthly'].includes(key)){
+    $('shortTrend').textContent='تحليل شهري';
+    $('shortTrend').className='tv neutral';
+    $('shortTrendNote').textContent='الاتجاه هنا يعتمد على تغير الأشهر وليس المتوسطات اليومية.';
+    $('vsMA7').textContent='—';$('vsMA7Note').textContent='غير مطبق لهذه الفترة.';
+    $('vsMA30').textContent='—';$('vsMA30Note').textContent='غير مطبق لهذه الفترة.';
+    return;
+  }
+  const vals=series.map(x=>Number(x.v)),last=vals[vals.length-1],first=vals[0];
+  const pct=first?((last/first)-1)*100:0;
+  let t='جانبي / مستقر',cls='neutral';
+  if(pct>1){t='صاعد',cls='up'} else if(pct<-1){t='هابط',cls='down'}
+  $('shortTrend').textContent=t;$('shortTrend').className='tv '+cls;
+  $('shortTrendNote').textContent='تغير الفترة المعروضة: '+(pct>=0?'+':'')+fmt(pct,2)+'%.';
+  const lastMA7=[...overlay.ma7].reverse().find(v=>v!=null);
+  if(lastMA7!=null){
+    const d7=(last/lastMA7-1)*100;
+    $('vsMA7').textContent=(d7>=0?'+':'')+fmt(d7,2)+'%';$('vsMA7').className='tv '+(d7>=0?'up':'down');
+    $('vsMA7Note').textContent='MA7 = '+fmt(lastMA7,3)+' SAR/g';
+  }else{
+    $('vsMA7').textContent='غير كافٍ';$('vsMA7').className='tv neutral';$('vsMA7Note').textContent='نحتاج 7 جلسات كاملة.';
+  }
+  if(overlay.ma30Value!=null){
+    const d30=(last/overlay.ma30Value-1)*100;
+    $('vsMA30').textContent=(d30>=0?'+':'')+fmt(d30,2)+'%';$('vsMA30').className='tv '+(d30>=0?'up':'down');
+    $('vsMA30Note').textContent='المتوسط = '+fmt(overlay.ma30Value,3)+' SAR/g';
+  }
+}
 function renderPeriodSafe(key){
   const names={daily:'يومي — آخر 5 جلسات',weekly:'أسبوعي — آخر 7 جلسات',monthly:'شهري — قراءة يومية',quarterly:'ربع سنوي — آخر 3 أشهر',halfyear:'نصف سنوي — آخر 6 أشهر',annual:'سنوي — قيمة كل شهر',multi:'عدة سنوات'};
   const series=periodSeries(key);
   if(!series||!series.length)return;
   const vals=series.map(x=>Number(x.v)).filter(Number.isFinite),first=series[0],last=series[series.length-1];
-  const hi=Math.max(...vals),lo=Math.min(...vals),diff=last.v-first.v,pct=first.v?diff/first.v*100:0;
+  const overlay=dailyOverlayForSeries(series,key);
+  const overlayVals=[...overlay.ma7,...overlay.ma30].filter(v=>v!=null&&Number.isFinite(v));
+  const scaleVals=vals.concat(overlayVals);
+  const hi=Math.max(...scaleVals),lo=Math.min(...scaleVals),diff=last.v-first.v,pct=first.v?diff/first.v*100:0;
   $('periodStart').textContent=fmt(first.v,3)+' SAR/g';$('periodStartLabel').textContent=first.d;
   $('periodEnd').textContent=fmt(last.v,3)+' SAR/g';$('periodEndLabel').textContent=last.d;
   $('periodChange').textContent=(pct>=0?'▲ ':'▼ ')+fmt(Math.abs(pct),2)+'%';$('periodChange').className='v '+(pct>=0?'up':'down');
@@ -312,12 +374,17 @@ function renderPeriodSafe(key){
     xlabels+='<text x="'+xAt(i)+'" y="'+(H-23)+'" text-anchor="middle" fill="#a8b7d4" font-size="12">'+lab+'</text>';
   });
   const pts=series.map((a,i)=>xAt(i)+','+yAt(a.v)).join(' ');
+  const ma7Segs=polylineFromValues(overlay.ma7,xAt,yAt);
+  const ma30Segs=polylineFromValues(overlay.ma30,xAt,yAt);
+  const priceVisible=$('showPrice')?$('showPrice').checked:true,ma7Visible=$('showMA7')?$('showMA7').checked:true,ma30Visible=$('showMA30')?$('showMA30').checked:true;
+  const ma7Svg=ma7Visible?ma7Segs.map(p=>'<polyline points="'+p+'" fill="none" stroke="#39d98a" stroke-width="2.4" stroke-dasharray="7 5"/>').join(''):'';
+  const ma30Svg=ma30Visible?ma30Segs.map(p=>'<polyline points="'+p+'" fill="none" stroke="#ffd166" stroke-width="2" stroke-dasharray="3 6"/>').join(''):'';
   let dots='';
   series.forEach((a,i)=>{
     const col=i===0?'#d9e0eb':(a.v>=series[i-1].v?'#39d98a':'#ff7373');
     dots+='<circle cx="'+xAt(i)+'" cy="'+yAt(a.v)+'" r="4" fill="'+col+'"/><circle data-hit="'+i+'" cx="'+xAt(i)+'" cy="'+yAt(a.v)+'" r="12" fill="transparent" style="cursor:pointer"/>';
   });
-  $('chart').innerHTML='<svg viewBox="0 0 '+W+' '+H+'" width="100%" height="380" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg"><rect width="'+W+'" height="'+H+'" fill="#0b1325"/>'+grid+axis+xlabels+'<polyline points="'+pts+'" fill="none" stroke="#d9e0eb" stroke-width="3"/>'+dots+'</svg>';
+  $('chart').innerHTML='<svg viewBox="0 0 '+W+' '+H+'" width="100%" height="380" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg"><rect width="'+W+'" height="'+H+'" fill="#0b1325"/>'+grid+axis+xlabels+(priceVisible?'<polyline points="'+pts+'" fill="none" stroke="#d9e0eb" stroke-width="3"/>':'')+ma7Svg+ma30Svg+(priceVisible?dots:'')+'</svg>';
   $('chart').querySelectorAll('[data-hit]').forEach(el=>{
     const i=Number(el.dataset.hit);
     el.addEventListener('mouseenter',e=>showTip(e,series,i));
@@ -325,6 +392,8 @@ function renderPeriodSafe(key){
     el.addEventListener('mouseleave',hideTip);
     el.addEventListener('click',e=>showTip(e,series,i));
   });
+  if($('maNote')) $('maNote').textContent=overlay.note;
+  updateTrendBoxes(series,key,overlay);
   renderNarrative(series,key);renderDetails(series,key);
 }
 document.querySelectorAll('[data-period]').forEach(b=>{
@@ -333,6 +402,7 @@ document.querySelectorAll('[data-period]').forEach(b=>{
     b.classList.add('active');currentPeriod=b.dataset.period;hideTip();renderPeriodSafe(currentPeriod);
   };
 });
+['showPrice','showMA7','showMA30'].forEach(id=>{if($(id))$(id).addEventListener('change',()=>renderPeriodSafe(currentPeriod));});
 renderPeriodSafe(currentPeriod);
 updateMarket();calc();renderLedger();fetchLive();setInterval(fetchLive,60000);
 </script>
