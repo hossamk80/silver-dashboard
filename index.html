@@ -17,7 +17,7 @@ button.active,button:hover{background:#d9e0eb;color:#101522}.page{display:none}.
 .up{color:var(--up)}.down{color:var(--down)}.neutral{color:var(--warn)}input{width:100%;padding:11px 12px;border-radius:10px;border:1px solid #3a4b70;background:#0c1428;color:#fff;font-size:16px}
 label{display:block;color:#aeb9d4;font-size:13px;margin-bottom:7px}.actions{display:flex;gap:9px;flex-wrap:wrap;margin-top:12px}.buy{background:#143c2d;border-color:#27885e}.sell{background:#4a2025;border-color:#a84652}
 table{width:100%;border-collapse:collapse;font-size:13px}th,td{padding:10px 8px;border-bottom:1px solid #273652;text-align:right;vertical-align:top}th{color:#b9c6df;background:#121a2f}.tablewrap{overflow:auto;max-height:500px}
-canvas{width:100%;height:340px;background:#0b1325;border-radius:12px}.rec{border-right:4px solid #7287b4}.src{font-size:12px;color:#95a5c6}.status{font-weight:700}.good{color:var(--up)}.bad{color:var(--down)}#chart svg{display:block;width:100%;height:340px}
+canvas{width:100%;height:340px;background:#0b1325;border-radius:12px}.rec{border-right:4px solid #7287b4}.src{font-size:12px;color:#95a5c6}.status{font-weight:700}.good{color:var(--up)}.bad{color:var(--down)}#chart svg{display:block;width:100%;height:380px}.chart-wrap{position:relative}.chart-tip{position:absolute;display:none;pointer-events:none;z-index:5;min-width:190px;background:#07101f;border:1px solid #52698f;border-radius:10px;padding:10px 12px;color:#fff;font-size:12px;line-height:1.7;box-shadow:0 8px 24px rgba(0,0,0,.35)}.chart-tip b{font-size:14px}.period-insight{margin-top:12px;padding:14px;border:1px solid #2d4165;border-radius:12px;background:#0d172a;line-height:1.8}.detail-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:8px;margin-top:12px}.detail-item{padding:10px;border:1px solid #273958;border-radius:10px;background:#0c1528}.detail-item .d{font-size:12px;color:#9eacc8}.detail-item .p{font-weight:800;font-size:16px;margin-top:4px}.detail-item .c{font-size:12px;margin-top:4px}.chart-help{margin-top:7px;color:#8fa0c0;font-size:12px}
 @media(max-width:1050px){.grid5,.grid4,.grid3{grid-template-columns:repeat(2,1fr)}}@media(max-width:650px){.grid5,.grid4,.grid3{grid-template-columns:1fr}.wrap{padding:14px}}
 </style>
 </head>
@@ -68,7 +68,7 @@ canvas{width:100%;height:340px;background:#0b1325;border-radius:12px}.rec{border
       </div>
     </div>
 
-    <div class="panel" style="margin-top:14px"><h2 id="chartTitle">اتجاه سعر الجرام — شهري</h2><div id="chart" style="width:100%;min-height:340px;background:#0b1325;border-radius:12px;overflow:hidden"></div><div class="src">مرجع الاتجاه التاريخي: XAG/USD وبيانات تاريخية للفضة بالريال السعودي. السعر اللحظي: Gold API، ثم التحويل إلى SAR على أساس 3.75 SAR/USD.</div></div>
+    <div class="panel" style="margin-top:14px"><h2 id="chartTitle">اتجاه سعر الجرام — شهري</h2><div class="chart-wrap"><div id="chart" style="width:100%;min-height:380px;background:#0b1325;border-radius:12px;overflow:hidden"></div><div id="chartTip" class="chart-tip"></div></div><div class="chart-help">حرّك مؤشر الماوس فوق أي نقطة لعرض التاريخ، السعر، والتغير عن النقطة السابقة. على الجوال اضغط على النقطة.</div><div id="periodNarrative" class="period-insight"></div><div id="periodDetail" class="detail-grid"></div><div class="src" style="margin-top:12px">مرجع الاتجاه التاريخي: XAG/USD وبيانات تاريخية للفضة بالريال السعودي. السعر اللحظي: Gold API، ثم التحويل إلى SAR على أساس 3.75 SAR/USD.</div></div>
   </section>
 
   <section id="trade" class="page">
@@ -149,8 +149,7 @@ const SAR_PER_USD=3.75, OZ_G=31.1034768;
 let liveSpot=7.953;
 const DATA=[{"d":"2026-08-24","v":8.3141},{"d":"2026-08-25","v":8.2789},{"d":"2026-08-26","v":8.2136},{"d":"2026-08-27","v":8.3516},{"d":"2026-08-28","v":8.0029},{"d":"2026-08-31","v":8.0231},{"d":"2026-09-01","v":7.7479},{"d":"2026-09-02","v":7.8761},{"d":"2026-09-03","v":8.0753},{"d":"2026-09-04","v":7.9834},{"d":"2026-09-07","v":7.9774},{"d":"2026-09-08","v":7.9294},{"d":"2026-09-09","v":8.1120},{"d":"2026-09-10","v":7.6646},{"d":"2026-09-11","v":7.7741},{"d":"2026-09-14","v":7.6249},{"d":"2026-09-15","v":7.6763},{"d":"2026-09-16","v":7.5919},{"d":"2026-09-17","v":7.8630},{"d":"2026-09-18","v":7.9882},{"d":"2026-09-20","v":7.9901},{"d":"2026-09-21","v":7.9635},{"d":"2026-09-22","v":7.9519}];
 const MONTHLY=[
-{"d":"2025-01","v":3.6601},{"d":"2025-02","v":3.8732},{"d":"2025-03","v":4.0124},{"d":"2025-04","v":3.8896},{"d":"2025-05","v":3.9565},{"d":"2025-06","v":4.3484},{"d":"2025-07","v":4.5461},{"d":"2025-08","v":4.6065},{"d":"2025-09","v":5.1517},{"d":"2025-10","v":5.9540},{"d":"2025-11","v":6.1309},{"d":"2025-12","v":7.9056},
-{"d":"2026-01","v":10.9591},{"d":"2026-02","v":9.8840},{"d":"2026-03","v":9.4381},{"d":"2026-04","v":9.1429},{"d":"2026-05","v":9.4262},{"d":"2026-06","v":7.9673}
+{"d":"2026-01","v":10.959},{"d":"2026-02","v":9.884},{"d":"2026-03","v":9.438},{"d":"2026-04","v":9.143},{"d":"2026-05","v":9.426},{"d":"2026-06","v":7.967},{"d":"2026-07","v":7.079},{"d":"2026-08","v":7.363},{"d":"2026-09","v":7.870}
 ];
 const ANNUAL=[
 {"d":"2024","v":3.4106},{"d":"2025","v":4.8499},{"d":"2026 YTD","v":9.4270}
@@ -193,73 +192,148 @@ $('clear').onclick=()=>{if(confirm('مسح سجل العمليات؟')){trades=[
 function renderLedger(){const s=avgCostState(),bid=Number($('bid').value||liveSpot),val=s.qty*bid,un=(bid-s.avg)*s.qty,total=s.real+un;$('sumBuy').textContent=fmt(s.sumB)+' SAR';$('sumSell').textContent=fmt(s.sumS)+' SAR';$('qty').textContent=fmt(s.qty,2)+' g';$('avgCost').textContent=fmt(s.avg,3)+' SAR/g';$('currentValue').textContent=fmt(val)+' SAR';$('realPL').textContent=fmt(s.real)+' SAR';$('unrealPL').textContent=fmt(un)+' SAR';$('totalPL').textContent=fmt(total)+' SAR';
  let q=0,avg=0;$('rows').innerHTML=trades.map(t=>{let pl='—';if(t.type==='buy'){let nq=q+t.g;avg=nq?((q*avg)+(t.g*t.p))/nq:0;q=nq}else{pl=fmt((t.p-avg)*t.g)+' SAR';q-=t.g;if(q<1e-9){q=0;avg=0}}return '<tr><td>'+t.ts+'</td><td>'+(t.type==='buy'?'شراء':'بيع')+'</td><td>'+fmt(t.g,2)+'</td><td>'+fmt(t.p,3)+'</td><td>'+fmt(t.g*t.p)+'</td><td>'+pl+'</td></tr>'}).reverse().join('')}
 let currentPeriod='monthly';
-function renderPeriodSafe(key){
-  const names={daily:'يومي',weekly:'أسبوعي',monthly:'شهري',quarterly:'ربع سنوي',halfyear:'نصف سنوي',annual:'سنوي',multi:'عدة سنوات'};
-  let series;
-  if(key==='daily') series=DATA.slice(-2);
-  else if(key==='weekly') series=DATA.slice(-7);
-  else if(key==='monthly') series=DATA.slice();
-  else if(key==='quarterly') series=MONTHLY.slice(-3);
-  else if(key==='halfyear') series=MONTHLY.slice(-6);
-  else if(key==='annual') series=MONTHLY.slice(-12);
-  else series=ANNUAL.slice();
-
-  if(!series || series.length<1) return;
-  const vals=series.map(x=>Number(x.v)).filter(Number.isFinite);
-  const first=series[0], last=series[series.length-1];
-  const hi=Math.max(...vals), lo=Math.min(...vals), diff=last.v-first.v, pct=first.v?diff/first.v*100:0;
-
-  if($('periodStart')) $('periodStart').textContent=fmt(first.v,3)+' SAR/g';
-  if($('periodStartLabel')) $('periodStartLabel').textContent=first.d;
-  if($('periodEnd')) $('periodEnd').textContent=fmt(last.v,3)+' SAR/g';
-  if($('periodEndLabel')) $('periodEndLabel').textContent=last.d;
-  if($('periodChange')){
-    $('periodChange').textContent=(pct>=0?'▲ ':'▼ ')+fmt(Math.abs(pct),2)+'%';
-    $('periodChange').className='v '+(pct>=0?'up':'down');
+function arDay(dateStr){
+  const d=new Date(dateStr+'T00:00:00Z');
+  return new Intl.DateTimeFormat('ar-SA',{weekday:'short',day:'numeric',month:'short',timeZone:'UTC'}).format(d);
+}
+function arMonth(label){
+  const m=label.match(/^(\d{4})-(\d{2})$/);
+  if(!m) return label;
+  const d=new Date(Date.UTC(Number(m[1]),Number(m[2])-1,1));
+  return new Intl.DateTimeFormat('ar-SA',{month:'short',year:'numeric',timeZone:'UTC'}).format(d);
+}
+function changeInfo(series,i){
+  if(i===0) return {diff:0,pct:0};
+  const prev=Number(series[i-1].v),cur=Number(series[i].v);
+  return {diff:cur-prev,pct:prev?((cur/prev)-1)*100:0};
+}
+function weeklyBuckets(series){
+  const out=[];
+  for(let i=0;i<series.length;i+=5){
+    const chunk=series.slice(i,i+5);
+    if(!chunk.length) continue;
+    out.push({
+      label:'الأسبوع '+(out.length+1),
+      start:chunk[0].d,end:chunk[chunk.length-1].d,
+      avg:chunk.reduce((a,b)=>a+b.v,0)/chunk.length,
+      high:Math.max(...chunk.map(x=>x.v)),
+      low:Math.min(...chunk.map(x=>x.v)),
+      change:chunk[0].v?((chunk[chunk.length-1].v/chunk[0].v)-1)*100:0
+    });
   }
-  if($('periodChangeAbs')) $('periodChangeAbs').textContent=(diff>=0?'+':'')+fmt(diff,3)+' SAR/g';
-  if($('periodHigh')) $('periodHigh').textContent=fmt(hi,3)+' SAR/g';
-  if($('periodLow')) $('periodLow').textContent='الأدنى '+fmt(lo,3)+' SAR/g';
-  if($('chartTitle')) $('chartTitle').textContent='اتجاه سعر الجرام — '+(names[key]||key);
+  return out;
+}
+function periodSeries(key){
+  if(key==='daily') return DATA.slice(-5);
+  if(key==='weekly') return DATA.slice(-7);
+  if(key==='monthly') return DATA.slice();
+  if(key==='quarterly') return MONTHLY.slice(-3);
+  if(key==='halfyear') return MONTHLY.slice(-6);
+  if(key==='annual') return MONTHLY.slice();
+  if(key==='multi') return ANNUAL.slice();
+  return DATA.slice();
+}
+function renderNarrative(series,key){
+  const vals=series.map(x=>Number(x.v));
+  const first=series[0],last=series[series.length-1],avg=vals.reduce((a,b)=>a+b,0)/vals.length,hi=Math.max(...vals),lo=Math.min(...vals);
+  const pct=first.v?((last.v/first.v)-1)*100:0;
+  let text='';
+  if(key==='daily'){
+    const ci=changeInfo(series,series.length-1);
+    text='<b>القراءة اليومية:</b> آخر سعر '+fmt(last.v,3)+' SAR/g، والتغير عن الجلسة السابقة '+(ci.pct>=0?'+':'')+fmt(ci.pct,2)+'%. نطاق آخر 5 جلسات بين '+fmt(lo,3)+' و '+fmt(hi,3)+' SAR/g.';
+  }else if(key==='weekly'){
+    text='<b>القراءة الأسبوعية:</b> بدأ الأسبوع عند '+fmt(first.v,3)+' وانتهى عند '+fmt(last.v,3)+' SAR/g، بتغير '+(pct>=0?'+':'')+fmt(pct,2)+'%. متوسط الجلسات '+fmt(avg,3)+' SAR/g.';
+  }else if(key==='monthly'){
+    const w=weeklyBuckets(series);
+    text='<b>القراءة الشهرية:</b> التغير من أول نقطة إلى آخر نقطة '+(pct>=0?'+':'')+fmt(pct,2)+'%، ومتوسط السعر '+fmt(avg,3)+' SAR/g. أسفل الرسم ستجد قراءة أسبوعية مختصرة إضافة إلى أسعار الأيام.';
+    if(w.length) text+='<br><b>آخر أسبوع متاح:</b> متوسط '+fmt(w[w.length-1].avg,3)+' SAR/g، وتغير '+(w[w.length-1].change>=0?'+':'')+fmt(w[w.length-1].change,2)+'%.';
+  }else if(key==='quarterly'){
+    text='<b>الربع السنوي:</b> يعرض آخر 3 أشهر فقط. التغير بين أول وآخر شهر '+(pct>=0?'+':'')+fmt(pct,2)+'%.';
+  }else if(key==='halfyear'){
+    text='<b>النصف سنوي:</b> يعرض آخر 6 أشهر فقط. المتوسط '+fmt(avg,3)+' SAR/g والتغير '+(pct>=0?'+':'')+fmt(pct,2)+'%.';
+  }else if(key==='annual'){
+    text='<b>السنوي:</b> يعرض متوسط كل شهر من بداية 2026 حتى أحدث شهر متاح، لتتمكن من مقارنة قيمة كل شهر مباشرة.';
+  }else{
+    text='<b>عدة سنوات:</b> مقارنة سنوية مختصرة. مرّر المؤشر فوق النقاط لقراءة كل سنة.';
+  }
+  $('periodNarrative').innerHTML=text;
+}
+function renderDetails(series,key){
+  let html='';
+  if(key==='monthly'){
+    const w=weeklyBuckets(series);
+    html+=w.map(x=>'<div class="detail-item"><div class="d">'+x.label+' · '+x.start+' → '+x.end+'</div><div class="p">'+fmt(x.avg,3)+' SAR/g</div><div class="c '+(x.change>=0?'up':'down')+'">'+(x.change>=0?'▲ ':'▼ ')+fmt(Math.abs(x.change),2)+'%</div></div>').join('');
+    html+=series.map((x,i)=>{const c=changeInfo(series,i);return '<div class="detail-item"><div class="d">'+arDay(x.d)+'</div><div class="p">'+fmt(x.v,3)+' SAR/g</div><div class="c '+(c.pct>=0?'up':'down')+'">'+(i===0?'بداية الفترة':(c.pct>=0?'▲ ':'▼ ')+fmt(Math.abs(c.pct),2)+'%')+'</div></div>'}).join('');
+  }else{
+    html=series.map((x,i)=>{const c=changeInfo(series,i);const lab=(key==='quarterly'||key==='halfyear'||key==='annual')?arMonth(x.d):(key==='multi'?x.d:arDay(x.d));return '<div class="detail-item"><div class="d">'+lab+'</div><div class="p">'+fmt(x.v,3)+' SAR/g</div><div class="c '+(c.pct>=0?'up':'down')+'">'+(i===0?'بداية الفترة':(c.pct>=0?'▲ ':'▼ ')+fmt(Math.abs(c.pct),2)+'%')+'</div></div>'}).join('');
+  }
+  $('periodDetail').innerHTML=html;
+}
+function showTip(ev,series,i){
+  const tip=$('chartTip'),x=series[i],c=changeInfo(series,i);
+  const isMonth=/^\d{4}-\d{2}$/.test(x.d), label=isMonth?arMonth(x.d):x.d;
+  tip.innerHTML='<b>'+label+'</b><br>السعر: <b>'+fmt(x.v,3)+' SAR/g</b><br>'+(i===0?'بداية الفترة':'التغير: <span class="'+(c.pct>=0?'up':'down')+'">'+(c.pct>=0?'+':'')+fmt(c.diff,3)+' SAR/g ('+(c.pct>=0?'+':'')+fmt(c.pct,2)+'%)</span>');
+  tip.style.display='block';
+  const wrap=tip.parentElement.getBoundingClientRect();
+  let left=ev.clientX-wrap.left+14, top=ev.clientY-wrap.top-20;
+  left=Math.max(8,Math.min(left,wrap.width-210)); top=Math.max(8,Math.min(top,wrap.height-95));
+  tip.style.left=left+'px';tip.style.top=top+'px';
+}
+function hideTip(){ if($('chartTip')) $('chartTip').style.display='none'; }
+function renderPeriodSafe(key){
+  const names={daily:'يومي — آخر 5 جلسات',weekly:'أسبوعي — آخر 7 جلسات',monthly:'شهري — قراءة يومية',quarterly:'ربع سنوي — آخر 3 أشهر',halfyear:'نصف سنوي — آخر 6 أشهر',annual:'سنوي — قيمة كل شهر',multi:'عدة سنوات'};
+  const series=periodSeries(key);
+  if(!series||!series.length)return;
+  const vals=series.map(x=>Number(x.v)).filter(Number.isFinite),first=series[0],last=series[series.length-1];
+  const hi=Math.max(...vals),lo=Math.min(...vals),diff=last.v-first.v,pct=first.v?diff/first.v*100:0;
+  $('periodStart').textContent=fmt(first.v,3)+' SAR/g';$('periodStartLabel').textContent=first.d;
+  $('periodEnd').textContent=fmt(last.v,3)+' SAR/g';$('periodEndLabel').textContent=last.d;
+  $('periodChange').textContent=(pct>=0?'▲ ':'▼ ')+fmt(Math.abs(pct),2)+'%';$('periodChange').className='v '+(pct>=0?'up':'down');
+  $('periodChangeAbs').textContent=(diff>=0?'+':'')+fmt(diff,3)+' SAR/g';
+  $('periodHigh').textContent=fmt(hi,3)+' SAR/g';$('periodLow').textContent='الأدنى '+fmt(lo,3)+' SAR/g';
+  $('chartTitle').textContent='اتجاه سعر الجرام — '+names[key];
 
-  const W=1100,H=340,padL=65,padR=25,padT=25,padB=45;
-  let min=lo,max=hi,span=max-min||1;min-=span*.10;max+=span*.10;
+  const W=1160,H=380,padL=30,padR=88,padT=28,padB=62;
+  let min=lo,max=hi,span=max-min||1;min-=span*.12;max+=span*.12;
   const xAt=i=>padL+(W-padL-padR)*(series.length===1?0.5:i/(series.length-1));
   const yAt=v=>padT+(H-padT-padB)*(max-v)/(max-min);
-  let grid='', labels='';
+  let grid='',axis='',xlabels='';
   for(let i=0;i<5;i++){
-    const y=padT+(H-padT-padB)*i/4;
-    const val=max-(max-min)*i/4;
+    const y=padT+(H-padT-padB)*i/4,val=max-(max-min)*i/4;
     grid+='<line x1="'+padL+'" y1="'+y+'" x2="'+(W-padR)+'" y2="'+y+'" stroke="#293955" stroke-width="1"/>';
-    labels+='<text x="8" y="'+(y+4)+'" fill="#93a2c2" font-size="12">'+Number(val).toFixed(2)+'</text>';
+    axis+='<rect x="'+(W-padR+8)+'" y="'+(y-12)+'" width="72" height="24" rx="6" fill="#0b1325" stroke="#2c3e60"/><text x="'+(W-padR+44)+'" y="'+(y+5)+'" text-anchor="middle" fill="#d7e2f6" font-size="13">'+Number(val).toFixed(2)+'</text>';
   }
+  axis+='<text x="'+(W-18)+'" y="18" text-anchor="end" fill="#93a2c2" font-size="12">SAR/g</text>';
+  let step=1;
+  if(key==='monthly') step=Math.max(1,Math.ceil(series.length/7));
+  series.forEach((a,i)=>{
+    if(i%step!==0 && i!==series.length-1)return;
+    const lab=(key==='quarterly'||key==='halfyear'||key==='annual')?arMonth(a.d):(key==='multi'?a.d:arDay(a.d).replace(/،/g,''));
+    xlabels+='<text x="'+xAt(i)+'" y="'+(H-23)+'" text-anchor="middle" fill="#a8b7d4" font-size="12">'+lab+'</text>';
+  });
   const pts=series.map((a,i)=>xAt(i)+','+yAt(a.v)).join(' ');
   let dots='';
   series.forEach((a,i)=>{
     const col=i===0?'#d9e0eb':(a.v>=series[i-1].v?'#39d98a':'#ff7373');
-    dots+='<circle cx="'+xAt(i)+'" cy="'+yAt(a.v)+'" r="4" fill="'+col+'"/>';
+    dots+='<circle cx="'+xAt(i)+'" cy="'+yAt(a.v)+'" r="4" fill="'+col+'"/><circle data-hit="'+i+'" cx="'+xAt(i)+'" cy="'+yAt(a.v)+'" r="12" fill="transparent" style="cursor:pointer"/>';
   });
-  const idxs=[0,Math.floor((series.length-1)/2),series.length-1].filter((v,i,a)=>a.indexOf(v)===i);
-  idxs.forEach(i=>{labels+='<text x="'+Math.max(8,Math.min(W-120,xAt(i)-35))+'" y="'+(H-12)+'" fill="#93a2c2" font-size="12">'+series[i].d+'</text>';});
-  const svg='<svg viewBox="0 0 '+W+' '+H+'" width="100%" height="340" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">'+
-    '<rect width="'+W+'" height="'+H+'" fill="#0b1325"/>'+grid+labels+
-    '<polyline points="'+pts+'" fill="none" stroke="#d9e0eb" stroke-width="3"/>'+dots+'</svg>';
-  if($('chart')) $('chart').innerHTML=svg;
+  $('chart').innerHTML='<svg viewBox="0 0 '+W+' '+H+'" width="100%" height="380" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg"><rect width="'+W+'" height="'+H+'" fill="#0b1325"/>'+grid+axis+xlabels+'<polyline points="'+pts+'" fill="none" stroke="#d9e0eb" stroke-width="3"/>'+dots+'</svg>';
+  $('chart').querySelectorAll('[data-hit]').forEach(el=>{
+    const i=Number(el.dataset.hit);
+    el.addEventListener('mouseenter',e=>showTip(e,series,i));
+    el.addEventListener('mousemove',e=>showTip(e,series,i));
+    el.addEventListener('mouseleave',hideTip);
+    el.addEventListener('click',e=>showTip(e,series,i));
+  });
+  renderNarrative(series,key);renderDetails(series,key);
 }
 document.querySelectorAll('[data-period]').forEach(b=>{
   b.onclick=()=>{
     document.querySelectorAll('[data-period]').forEach(x=>x.classList.remove('active'));
-    b.classList.add('active');
-    currentPeriod=b.dataset.period;
-    renderPeriodSafe(currentPeriod);
+    b.classList.add('active');currentPeriod=b.dataset.period;hideTip();renderPeriodSafe(currentPeriod);
   };
 });
 renderPeriodSafe(currentPeriod);
-updateMarket();
-calc();
-renderLedger();
-fetchLive();
-setInterval(fetchLive,60000);
-
+updateMarket();calc();renderLedger();fetchLive();setInterval(fetchLive,60000);
 </script>
 </body></html>
