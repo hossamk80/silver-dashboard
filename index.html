@@ -437,19 +437,19 @@ function renderPeriodSafe(key){
   let srSvg='';
   if(srVisible&&sr){
     const sy1=yAt(sr.support.high),sy2=yAt(sr.support.low),ry1=yAt(sr.resistance.high),ry2=yAt(sr.resistance.low);
-    srSvg='<rect x="'+padL+'" y="'+Math.min(sy1,sy2)+'" width="'+(W-padL-padR)+'" height="'+Math.abs(sy2-sy1)+'" fill="rgba(57,217,138,.10)"/>'+
-      '<line x1="'+padL+'" y1="'+yAt(sr.support.mid)+'" x2="'+(W-padR)+'" y2="'+yAt(sr.support.mid)+'" stroke="#39d98a" stroke-width="1.5" stroke-dasharray="6 6"/>'+
-      '<text x="'+(padL+8)+'" y="'+(yAt(sr.support.mid)-6)+'" fill="#7ff0b4" font-size="12">Support '+fmt(sr.support.mid,3)+'</text>'+
-      '<rect x="'+padL+'" y="'+Math.min(ry1,ry2)+'" width="'+(W-padL-padR)+'" height="'+Math.abs(ry2-ry1)+'" fill="rgba(255,115,115,.10)"/>'+
-      '<line x1="'+padL+'" y1="'+yAt(sr.resistance.mid)+'" x2="'+(W-padR)+'" y2="'+yAt(sr.resistance.mid)+'" stroke="#ff7373" stroke-width="1.5" stroke-dasharray="6 6"/>'+
-      '<text x="'+(padL+8)+'" y="'+(yAt(sr.resistance.mid)+16)+'" fill="#ff9b9b" font-size="12">Resistance '+fmt(sr.resistance.mid,3)+'</text>';
+    srSvg='<rect x="'+padL+'" y="'+Math.min(sy1,sy2)+'" width="'+(W-padL-padR)+'" height="'+Math.abs(sy2-sy1)+'" fill="rgba(57,217,138,.20)" stroke="rgba(57,217,138,.55)" stroke-width="1"/>'+
+      '<line x1="'+padL+'" y1="'+yAt(sr.support.mid)+'" x2="'+(W-padR)+'" y2="'+yAt(sr.support.mid)+'" stroke="#39d98a" stroke-width="2.5" stroke-dasharray="7 5"/>'+
+      '<text x="'+(padL+8)+'" y="'+(yAt(sr.support.mid)-10)+'" fill="#9af7c6" font-size="13" font-weight="700">منطقة الدعم ≈ '+fmt(sr.support.mid,3)+'</text>'+
+      '<rect x="'+padL+'" y="'+Math.min(ry1,ry2)+'" width="'+(W-padL-padR)+'" height="'+Math.abs(ry2-ry1)+'" fill="rgba(255,115,115,.19)" stroke="rgba(255,115,115,.55)" stroke-width="1"/>'+
+      '<line x1="'+padL+'" y1="'+yAt(sr.resistance.mid)+'" x2="'+(W-padR)+'" y2="'+yAt(sr.resistance.mid)+'" stroke="#ff7373" stroke-width="2.5" stroke-dasharray="7 5"/>'+
+      '<text x="'+(padL+8)+'" y="'+(yAt(sr.resistance.mid)+20)+'" fill="#ffc0c0" font-size="13" font-weight="700">منطقة المقاومة ≈ '+fmt(sr.resistance.mid,3)+'</text>';
   }
   let dots='';
   series.forEach((a,i)=>{
     const col=i===0?'#d9e0eb':(a.v>=series[i-1].v?'#39d98a':'#ff7373');
     dots+='<circle cx="'+xAt(i)+'" cy="'+yAt(a.v)+'" r="4" fill="'+col+'"/><circle data-hit="'+i+'" cx="'+xAt(i)+'" cy="'+yAt(a.v)+'" r="12" fill="transparent" style="cursor:pointer"/>';
   });
-  $('chart').innerHTML='<svg viewBox="0 0 '+W+' '+H+'" width="100%" height="380" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg"><rect width="'+W+'" height="'+H+'" fill="#0b1325"/>'+grid+axis+xlabels+(priceVisible?'<polyline points="'+pts+'" fill="none" stroke="#d9e0eb" stroke-width="3"/>':'')+ma7Svg+ma30Svg+(priceVisible?dots:'')+'</svg>';
+  $('chart').innerHTML='<svg viewBox="0 0 '+W+' '+H+'" width="100%" height="380" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg"><rect width="'+W+'" height="'+H+'" fill="#0b1325"/>'+grid+srSvg+axis+xlabels+(priceVisible?'<polyline points="'+pts+'" fill="none" stroke="#d9e0eb" stroke-width="3"/>':'')+ma7Svg+ma30Svg+(priceVisible?dots:'')+'</svg>';
   $('chart').querySelectorAll('[data-hit]').forEach(el=>{
     const i=Number(el.dataset.hit);
     el.addEventListener('mouseenter',e=>showTip(e,series,i));
