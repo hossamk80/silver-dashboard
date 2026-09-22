@@ -1,0 +1,10 @@
+{
+  "name": "Silver Dashboard Saudi",
+  "short_name": "Silver SAR",
+  "start_url": "./",
+  "display": "standalone",
+  "background_color": "#091020",
+  "theme_color": "#091020",
+  "lang": "ar",
+  "dir": "rtl"
+}
